@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ggim.control;
+package ggim;
 
 import ggim.ui.controller.L01Controller;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,15 +18,14 @@ import javafx.stage.Stage;
  * @author ubuntu
  */
 public class GIMM extends Application {
-    
     @Override
-    public void start(Stage stage) throws Exception {
-           FXMLLoader loader= new FXMLLoader(
-                    getClass().getResource("ggim/ui/view/L01.fxml"));
-           Parent root= (Parent)loader.load();
-           L01Controller controller= ((L01Controller)loader.getController());
-           controller.setStage(primaryStage);
-           controller.initStage(root);
+    public void start(Stage stage) throws Exception {       
+        FXMLLoader loader= new FXMLLoader(
+                    getClass().getResource("/ggim/ui/view/L01.fxml"));
+        Parent root= (Parent)loader.load();
+        L01Controller controller= ((L01Controller)loader.getController());
+        controller.setStage(stage);
+        controller.initStage(root);
         
         //Scene scene = new Scene(root);
         
