@@ -5,12 +5,12 @@
  */
 package ggim;
 
-import ggim.ui.controller.L01Controller;
-import java.util.logging.Logger;
+import ggim.ui.controller.GM01Controller;
+import ggim.ui.controller.IncidenciasManager;
+import ggim.ui.controller.IncidenciasManagerTestGenerator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -19,12 +19,17 @@ import javafx.stage.Stage;
  */
 public class GIMM extends Application {
     @Override
-    public void start(Stage stage) throws Exception {       
+    public void start(Stage stage) throws Exception { 
+        IncidenciasManager man= new IncidenciasManagerTestGenerator();
+        /*FXMLLoader loader= new FXMLLoader(
+                    getClass().getResource("/ggim/ui/view/L01.fxml"));*/
         FXMLLoader loader= new FXMLLoader(
-                    getClass().getResource("/ggim/ui/view/L01.fxml"));
+                    getClass().getResource("/ggim/ui/view/GM01.fxml"));
         Parent root= (Parent)loader.load();
-        L01Controller controller= ((L01Controller)loader.getController());
+        //L01Controller controller= ((L01Controller)loader.getController());
+        GM01Controller controller= ((GM01Controller)loader.getController());
         controller.setStage(stage);
+        controller.setManager(man);
         controller.initStage(root);
         
         //Scene scene = new Scene(root);

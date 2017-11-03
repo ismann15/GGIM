@@ -28,8 +28,9 @@ import javafx.stage.Stage;
  * @author ubuntu
  */
 public class L01Controller implements Initializable {
-    Logger logger;
+   //Logger logger;
     private Stage stage;
+    private IncidenciasManager man;
     @FXML
     private Button btEntrar;
     @FXML
@@ -38,8 +39,12 @@ public class L01Controller implements Initializable {
     private PasswordField txtPass;
     
     
+    public void setManager(IncidenciasManager man){
+        this.man=man;
+    }
+    
     @FXML
-    private void handleWindowShowing(Event e){
+    public void handleWindowShowing(Event e){
         //Todos los campos se habilitan en la creación de la ventana
         btEntrar.setDisable(false);
         txtPass.setEditable(true);
