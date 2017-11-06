@@ -7,6 +7,8 @@ package ggim.ui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -53,13 +55,13 @@ public class GM01Controller implements Initializable{
     
     public void handleWindowShowing(Event e){
         
-        tcolumId.setCellFactory(new PropertyValueFactory <>("ID"));
-        tcolumMaq.setCellFactory(new PropertyValueFactory <>("Maquina"));
-        tcolumRev.setCellFactory(new PropertyValueFactory <>("Revision"));
-        tcolumEst.setCellFactory(new PropertyValueFactory <>("Estado"));
-        
+        tcolumId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tcolumMaq.setCellValueFactory(new PropertyValueFactory<>("maquina"));
+        tcolumRev.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        tcolumEst.setCellValueFactory(new PropertyValueFactory<>("estado"));
         ObservableList<IncidenciaBean> incidencias=FXCollections.observableArrayList(man.getAllIncidencias());
         tablaIncidencias.setItems(incidencias);
+        tablaIncidencias.getSelectionModel().selectedItemProperty().addListener(this::handleIncidenciasTableSelectionChange);
     }
     public void initStage(Parent root) {
         Scene scene= new Scene(root);
@@ -67,7 +69,12 @@ public class GM01Controller implements Initializable{
         stage.setResizable(false);
         stage.setOnShowing(this::handleWindowShowing);
         stage.show();
+        
     }
     
+    public void handleIncidenciasTableSelectionChange(ObservableValue observable, Object oldValue, Object newValue){
+        
+    }
+   
     
 }

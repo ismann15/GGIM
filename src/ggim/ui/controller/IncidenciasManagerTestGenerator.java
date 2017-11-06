@@ -19,12 +19,10 @@ public class IncidenciasManagerTestGenerator implements IncidenciasManager{
     public Collection getAllIncidencias() {
         return incidencias;
     }
-    
-    public ArrayList <IncidenciaBean> IncidenciasGenerator(){
+    public IncidenciasManagerTestGenerator(){
         incidencias= new ArrayList <IncidenciaBean>();
         for(int i=0;i<25;i++){
-            incidencias.add(new IncidenciaBean(i,"maquina"+1,"estado"+1,i+"/"+i+"/"+i));
+            incidencias.add(new IncidenciaBean(i,"maquina"+i,"estado"+i,i+"/"+i+"/"+i));
         }
-        return incidencias;
     }
 }
