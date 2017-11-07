@@ -6,7 +6,6 @@
 package ggim.ui.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,8 +17,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -56,7 +57,10 @@ public class GI01Controller implements Initializable{
     private ComboBox comboMaquinas;
     @FXML
     private ComboBox comboEstados;
-    
+    @FXML
+    private TextField txtID;
+    @FXML
+    private DatePicker txtDate;
     
     public void setStage(Stage stage){
         this.stage=stage;
@@ -88,6 +92,9 @@ public class GI01Controller implements Initializable{
         btnModificar.setDisable(true);
         btnFiltrar.setDisable(true);
         btnLimpiar.setDisable(true);
+        //Mientras tenga algún carácter escrito, bloquea los demás campos del apartado de búsqueda avanzada, 
+        //exceptuando el “botón filtrar”, el cual se habilita
+        txtID.textProperty().addListener(this::TextChanged);
         //El “comboBox Máquina” se carga con todas las máquinas existentes
         AniadirMaquinas();
         //El “comboBox Estado” se carga con todos los posibles 
@@ -123,6 +130,33 @@ public class GI01Controller implements Initializable{
         //de una incidencia (Resuelta, En proceso, Sin procesar)
         ObservableList <String> maquinas= FXCollections.observableArrayList(man.getAllEstados());
         comboEstados.setItems(maquinas);
+    }
+    
+    public void TextChanged(String oldValue, String newValue){
+        if(e.getSource().equals(txtID)){
+           // System.out.print(txtID.getText().toString().trim().equals(""));
+            if(!(txtID.getText().toString().trim().equals(""))){
+                btnFiltrar.setDisable(false);
+                comboEstados.setDisable(true);
+                comboMaquinas.setDisable(true);
+                txtDate.setDisable(true);
+            }else {
+                btnFiltrar.setDisable(true);
+                comboEstados.setDisable(false);
+                comboMaquinas.setDisable(false);
+                txtDate.setDisable(false);
+            }
+           /*btnFiltrar.setDisable(false);
+           comboEstados.setDisable(true);
+           comboMaquinas.setDisable(true);
+           txtDate.setDisable(true);
+           if(txtID.getText().toString().trim().equals("")){
+                btnFiltrar.setDisable(true);
+                comboEstados.setDisable(false);
+                comboMaquinas.setDisable(false);
+                txtDate.setDisable(false);
+           }*/
+        }
     }
    
     
