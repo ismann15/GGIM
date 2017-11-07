@@ -13,4 +13,6 @@ import java.util.Collection;
  */
 public interface IncidenciasManager {
     public Collection getAllIncidencias();
+    public Collection getAllMaquinas();
+    public Collection getAllEstados();
 }

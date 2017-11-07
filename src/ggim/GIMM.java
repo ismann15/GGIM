@@ -5,7 +5,7 @@
  */
 package ggim;
 
-import ggim.ui.controller.GM01Controller;
+import ggim.ui.controller.GI01Controller;
 import ggim.ui.controller.IncidenciasManager;
 import ggim.ui.controller.IncidenciasManagerTestGenerator;
 import javafx.application.Application;
@@ -24,10 +24,10 @@ public class GIMM extends Application {
         /*FXMLLoader loader= new FXMLLoader(
                     getClass().getResource("/ggim/ui/view/L01.fxml"));*/
         FXMLLoader loader= new FXMLLoader(
-                    getClass().getResource("/ggim/ui/view/GM01.fxml"));
+                    getClass().getResource("/ggim/ui/view/GI01.fxml"));
         Parent root= (Parent)loader.load();
         //L01Controller controller= ((L01Controller)loader.getController());
-        GM01Controller controller= ((GM01Controller)loader.getController());
+        GI01Controller controller= ((GI01Controller)loader.getController());
         controller.setStage(stage);
         controller.setManager(man);
         controller.initStage(root);

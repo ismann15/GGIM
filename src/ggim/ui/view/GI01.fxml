@@ -14,8 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" 
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ggim.ui.controller.GM01Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ggim.ui.controller.GI01Controller">
    <top>
       <VBox prefHeight="155.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -26,7 +25,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Separator>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="30.0" text="..." textAlignment="CENTER">
+                  <Button fx:id="btnVolver" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="30.0" text="..." textAlignment="CENTER">
                      <font>
                         <Font size="10.0" />
                      </font></Button>
@@ -46,7 +45,7 @@
                <children>
                   <Label text="ID">
                      <padding>
-                        <Insets right="30.0" />
+                        <Insets right="40.0" />
                      </padding>
                   </Label>
                   <TextField prefHeight="26.0" prefWidth="170.0" />
@@ -55,7 +54,7 @@
                         <Insets right="4.0" />
                      </padding>
                   </Label>
-                  <ComboBox prefWidth="150.0" />
+                  <ComboBox fx:id="comboMaquinas" prefWidth="150.0" />
                </children>
                <opaqueInsets>
                   <Insets />
@@ -73,10 +72,10 @@
                         <Insets right="15.0" />
                      </padding>
                   </Label>
-                  <ComboBox prefWidth="150.0" />
+                  <ComboBox fx:id="comboEstados" prefWidth="150.0" />
                </children>
                <padding>
-                  <Insets left="68.0" />
+                  <Insets left="70.0" />
                </padding>
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" spacing="10.0">
@@ -84,8 +83,8 @@
                   <Insets left="40.0" right="40.0" />
                </padding>
                <children>
-                  <Button mnemonicParsing="false" text="Limpiar" />
-                  <Button mnemonicParsing="false" text="Filtrar" />
+                  <Button fx:id="btnLimpiar" mnemonicParsing="false" text="Limpiar" />
+                  <Button fx:id="btnFiltrar" mnemonicParsing="false" text="Filtrar" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="200.0">
@@ -105,12 +104,12 @@
          <children>
             <HBox alignment="CENTER" prefHeight="225.0" prefWidth="200.0">
                <children>
-                  <TableView  fx:id="tablaIncidencias" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0">
+                  <TableView fx:id="tablaIncidencias" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0">
                     <columns>
                       <TableColumn fx:id="tcolumId" prefWidth="100.0" text="ID" />
                       <TableColumn fx:id="tcolumMaq" prefWidth="125.0" text="Maquina" />
                         <TableColumn fx:id="tcolumRev" prefWidth="125.0" text="Revision" />
-                        <TableColumn  fx:id="tcolumEst" prefWidth="100.0" text="Estado" />
+                        <TableColumn fx:id="tcolumEst" prefWidth="100.0" text="Estado" />
                     </columns>
                   </TableView>
                </children>
@@ -120,9 +119,9 @@
                   <Insets right="40.0" />
                </padding>
                <children>
-                  <Button mnemonicParsing="false" text="Eliminar" />
-                  <Button mnemonicParsing="false" text="Modificar" />
-                  <Button mnemonicParsing="false" text="Añadir" />
+                  <Button fx:id="btnEliminar" mnemonicParsing="false" text="Eliminar" />
+                  <Button fx:id="btnModificar" mnemonicParsing="false" text="Modificar" />
+                  <Button fx:id="btnAniadir" mnemonicParsing="false" text="Añadir" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="200.0">
