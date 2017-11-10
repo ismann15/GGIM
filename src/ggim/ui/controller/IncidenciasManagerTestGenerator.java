@@ -24,6 +24,7 @@ public class IncidenciasManagerTestGenerator implements IncidenciasManager{
     
     public Collection getAllMaquinas(){
         maquinas= new ArrayList<String>();
+        maquinas.add("Sin selección");
         for(int i=0;i<incidencias.size();i++){
             maquinas.add(incidencias.get(i).getMaquina());
         }
@@ -40,6 +41,7 @@ public class IncidenciasManagerTestGenerator implements IncidenciasManager{
     @Override
     public Collection getAllEstados() {
         estados= new ArrayList <String>();
+        estados.add("Sin selección");
         estados.add("Resuelta");
         estados.add("En proceso");
         estados.add("Sin procesar");
