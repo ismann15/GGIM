@@ -15,4 +15,8 @@ public interface IncidenciasManager {
     public Collection getAllIncidencias();
     public Collection getAllMaquinas();
     public Collection getAllEstados();
+    public Collection getFiltradasFecha();
+    public Collection getFiltradasMaquinas();
+    public Collection getFiltradasEstados();
+    public Collection getFiltradasID();
 }

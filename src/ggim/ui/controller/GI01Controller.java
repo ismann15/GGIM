@@ -13,7 +13,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -65,6 +67,7 @@ public class GI01Controller implements Initializable{
     @FXML
     private DatePicker txtDate;
     
+    
     public void setStage(Stage stage){
         this.stage=stage;
     }
@@ -94,21 +97,24 @@ public class GI01Controller implements Initializable{
         btnAniadir.setDisable(true);
         btnModificar.setDisable(true);
         btnFiltrar.setDisable(true);
+        btnFiltrar.setOnAction(this::buttonOnClick);
         btnLimpiar.setDisable(true);
         //Mientras tenga algún carácter escrito, bloquea los demás campos del apartado de búsqueda avanzada, 
         //exceptuando el “botón filtrar”, el cual se habilita
         txtID.textProperty().addListener(this::textChangeListener);
         txtDate.getEditor().textProperty().addListener(this::dateChangeListener);
-        comboEstados.valueProperty().addListener(this::comboChangeListener);
-        comboMaquinas.valueProperty().addListener(this::comboChangeListener);
+        comboEstados.valueProperty().addListener(this::comboEstadosChangeListener);
+        comboMaquinas.valueProperty().addListener(this::comboMaquinasChangeListener);
         //txtDate.setOnAction(this::dateChangeListener);
         //El “comboBox Máquina” se carga con todas las máquinas existentes
         AniadirMaquinas();
-        comboMaquinas.getSelectionModel().selectFirst();
-        comboEstados.getSelectionModel().selectFirst();
+        
         //El “comboBox Estado” se carga con todos los posibles 
         //estados de una incidencia (Resuelta, En proceso, Sin procesar)
         AniadirEstados();
+        
+        comboMaquinas.getSelectionModel().selectFirst();
+        comboEstados.getSelectionModel().selectFirst();
     }
     public void initStage(Parent root) {
         Scene scene= new Scene(root);
@@ -147,15 +153,16 @@ public class GI01Controller implements Initializable{
             txtID.setDisable(true);
             btnFiltrar.setDisable(false);
         }else{
-            if(comboEstados.getSelectionModel().equals("Sin selección")
-                    ||comboMaquinas.getSelectionModel().equals("Sin selección")){
-            txtID.setDisable(false);
-            btnFiltrar.setDisable(true);
+            String estado= comboEstados.getSelectionModel().getSelectedItem();
+            String maquina= comboMaquinas.getSelectionModel().getSelectedItem();
+            if(estado.equals("Sin selección")&& maquina.equals("Sin selección")){
+                txtID.setDisable(false);
+                btnFiltrar.setDisable(true);  
             }
         }
     }
     public void textChangeListener( ObservableValue observable, String oldValue, String newValue){
-        if(!(newValue.trim().equals("Sin selección"))){
+        if(!(newValue.trim().equals(""))){
             btnFiltrar.setDisable(false);
             comboEstados.setDisable(true);
             comboMaquinas.setDisable(true);
@@ -168,17 +175,55 @@ public class GI01Controller implements Initializable{
         }
     }
     
-    public void comboChangeListener(ObservableValue observable, String oldValue, String newValue) {
+    public void comboEstadosChangeListener(ObservableValue observable, String oldValue, String newValue) {
         if(!(newValue.equals("Sin selección"))){
             txtID.setDisable(true);
             btnFiltrar.setDisable(false);
         }else{
-            if(txtDate.getEditor().equals("")||comboEstados.getSelectionModel().equals("Sin selección")
-                    ||comboMaquinas.getSelectionModel().equals("Sin selección")){
+            String date=txtDate.getEditor().getText().trim();
+            String maquina= comboMaquinas.getSelectionModel().getSelectedItem();
+            if(date.equals("")&&maquina.equals("Sin selección")){
+                txtID.setDisable(false);
+                btnFiltrar.setDisable(true);
+             }
+        }
+    }
+    
+    public void comboMaquinasChangeListener(ObservableValue observable, String oldValue, String newValue){
+        if(!(newValue.equals("Sin selección"))){
+            txtID.setDisable(true);
+            btnFiltrar.setDisable(false);
+        }else{
+            String date=txtDate.getEditor().getText().trim();
+            String estado= comboEstados.getSelectionModel().getSelectedItem();
+            if(date.equals("")&&estado.equals("Sin selección")){
                 txtID.setDisable(false);
                 btnFiltrar.setDisable(true);
             }
-            
+        }
+    }
+    
+    public void buttonOnClick(ActionEvent e){
+        
+        if(e.getSource().equals(btnFiltrar)){
+            ObservableList<IncidenciaBean> filtro;
+            if(txtID.isDisabled()){
+                //BUscamos por el resto de campos
+                
+                if(!(txtDate.getEditor().getText().trim().equals(""))){
+                    filtro= FXCollections.observableArrayList(man.getFiltradasFecha);
+                }
+                if(!(comboMaquinas.getSelectionModel().getSelectedItem().equals("Sin selección"))){
+                    filtro= FXCollections.observableArrayList(man.getFiltradasMaquinas);
+                }
+                if(!(comboEstados.getSelectionModel().getSelectedItem().equals("Sin selección"))){
+                   filtro= FXCollections.observableArrayList(man.getFiltradasEstado);
+                }
+                
+            }else{
+                //Buscamos por id
+                filtro= FXCollections.observableArrayList(man.getFiltradasID);
+            }
         }
     }
     
