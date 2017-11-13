@@ -211,18 +211,18 @@ public class GI01Controller implements Initializable{
                 //BUscamos por el resto de campos
                 
                 if(!(txtDate.getEditor().getText().trim().equals(""))){
-                    filtro= FXCollections.observableArrayList(man.getFiltradasFecha);
+                    filtro= FXCollections.observableArrayList(man.getFiltradasFecha());
                 }
                 if(!(comboMaquinas.getSelectionModel().getSelectedItem().equals("Sin selección"))){
-                    filtro= FXCollections.observableArrayList(man.getFiltradasMaquinas);
+                    filtro= FXCollections.observableArrayList(man.getFiltradasMaquinas());
                 }
                 if(!(comboEstados.getSelectionModel().getSelectedItem().equals("Sin selección"))){
-                   filtro= FXCollections.observableArrayList(man.getFiltradasEstado);
+                   filtro= FXCollections.observableArrayList(man.getFiltradasEstados());
                 }
                 
             }else{
                 //Buscamos por id
-                filtro= FXCollections.observableArrayList(man.getFiltradasID);
+                filtro= FXCollections.observableArrayList(man.getFiltradasID());
             }
         }
     }
