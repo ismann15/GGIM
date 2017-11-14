@@ -66,6 +66,7 @@ public class GI01Controller implements Initializable{
     private TextField txtID;
     @FXML
     private DatePicker txtDate;
+    private ObservableList<IncidenciaBean> incidencias;
     
     
     public void setStage(Stage stage){
@@ -89,7 +90,7 @@ public class GI01Controller implements Initializable{
         tcolumMaq.setCellValueFactory(new PropertyValueFactory<>("maquina"));
         tcolumRev.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         tcolumEst.setCellValueFactory(new PropertyValueFactory<>("estado"));
-        ObservableList<IncidenciaBean> incidencias=FXCollections.observableArrayList(man.getAllIncidencias());
+        incidencias=FXCollections.observableArrayList(man.getAllIncidencias());
         tablaIncidencias.setItems(incidencias);
         tablaIncidencias.getSelectionModel().selectedItemProperty().addListener(this::handleIncidenciasTableSelectionChange);
         //Todos los controles están activos, exceptuando el “botón filtrar”, el “botón Limpiar” y el “botón modificar”
@@ -99,6 +100,7 @@ public class GI01Controller implements Initializable{
         btnFiltrar.setDisable(true);
         btnFiltrar.setOnAction(this::buttonOnClick);
         btnLimpiar.setDisable(true);
+        btnLimpiar.setOnAction(this::buttonOnClick);
         //Mientras tenga algún carácter escrito, bloquea los demás campos del apartado de búsqueda avanzada, 
         //exceptuando el “botón filtrar”, el cual se habilita
         txtID.textProperty().addListener(this::textChangeListener);
@@ -152,6 +154,7 @@ public class GI01Controller implements Initializable{
         if(!(newValue.trim().equals(""))){
             txtID.setDisable(true);
             btnFiltrar.setDisable(false);
+            btnLimpiar.setDisable(false);
         }else{
             String estado= comboEstados.getSelectionModel().getSelectedItem();
             String maquina= comboMaquinas.getSelectionModel().getSelectedItem();
@@ -172,6 +175,7 @@ public class GI01Controller implements Initializable{
             comboEstados.setDisable(false);
             comboMaquinas.setDisable(false);
             txtDate.setDisable(false);
+            btnLimpiar.setDisable(false);
         }
     }
     
@@ -179,12 +183,14 @@ public class GI01Controller implements Initializable{
         if(!(newValue.equals("Sin selección"))){
             txtID.setDisable(true);
             btnFiltrar.setDisable(false);
+            btnLimpiar.setDisable(false);
         }else{
             String date=txtDate.getEditor().getText().trim();
             String maquina= comboMaquinas.getSelectionModel().getSelectedItem();
             if(date.equals("")&&maquina.equals("Sin selección")){
                 txtID.setDisable(false);
                 btnFiltrar.setDisable(true);
+                
              }
         }
     }
@@ -193,6 +199,7 @@ public class GI01Controller implements Initializable{
         if(!(newValue.equals("Sin selección"))){
             txtID.setDisable(true);
             btnFiltrar.setDisable(false);
+            btnLimpiar.setDisable(false);
         }else{
             String date=txtDate.getEditor().getText().trim();
             String estado= comboEstados.getSelectionModel().getSelectedItem();
@@ -206,27 +213,45 @@ public class GI01Controller implements Initializable{
     public void buttonOnClick(ActionEvent e){
         
         if(e.getSource().equals(btnFiltrar)){
-            ObservableList<IncidenciaBean> filtro;
+            filtrar();  
+        }else if(e.getSource().equals(btnLimpiar)){
+            limpiar();
+        }
+    }
+
+    private void filtrar() {
+        ObservableList<IncidenciaBean> filtro = incidencias;
             if(txtID.isDisabled()){
-                //BUscamos por el resto de campos
-                
+                //Buscamos por fecha
                 if(!(txtDate.getEditor().getText().trim().equals(""))){
-                    filtro= FXCollections.observableArrayList(man.getFiltradasFecha());
+                    filtro= FXCollections.observableArrayList(man.getFiltradasFecha(txtDate.getEditor().getText(),filtro));
                 }
+                //Buscamos por nombre de maquina
                 if(!(comboMaquinas.getSelectionModel().getSelectedItem().equals("Sin selección"))){
-                    filtro= FXCollections.observableArrayList(man.getFiltradasMaquinas());
+                    filtro= FXCollections.observableArrayList(man.getFiltradasMaquinas(comboMaquinas.getSelectionModel().getSelectedItem(),filtro));
                 }
+                //Buscamos por estado
                 if(!(comboEstados.getSelectionModel().getSelectedItem().equals("Sin selección"))){
-                   filtro= FXCollections.observableArrayList(man.getFiltradasEstados());
+                    filtro= FXCollections.observableArrayList(man.getFiltradasEstados(comboEstados.getSelectionModel().getSelectedItem(),filtro));
                 }
                 
             }else{
                 //Buscamos por id
-                filtro= FXCollections.observableArrayList(man.getFiltradasID());
+                filtro= FXCollections.observableArrayList(man.getFiltradasID(Integer.parseInt(txtID.getText()),filtro));
             }
-        }
+            
+            tablaIncidencias.setItems(filtro);
     }
-    
+
+    private void limpiar() {
+        //Se devuelve la ventana al estado en el que se encontraba en el momento de la creación de esta
+        tablaIncidencias.setItems(incidencias);
+        txtDate.getEditor().setText("");
+        txtID.setText("");
+        comboEstados.getSelectionModel().selectFirst();
+        comboMaquinas.getSelectionModel().selectFirst();
+        
+    }
     
 }
    

@@ -26,7 +26,6 @@ public class GIMM extends Application {
         FXMLLoader loader= new FXMLLoader(
                     getClass().getResource("/ggim/ui/view/GI01.fxml"));
         Parent root= (Parent)loader.load();
-        //L01Controller controller= ((L01Controller)loader.getController());
         GI01Controller controller= ((GI01Controller)loader.getController());
         controller.setStage(stage);
         controller.setManager(man);

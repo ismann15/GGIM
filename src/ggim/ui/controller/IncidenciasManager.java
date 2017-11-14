@@ -6,6 +6,7 @@
 package ggim.ui.controller;
 
 import java.util.Collection;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -15,8 +16,8 @@ public interface IncidenciasManager {
     public Collection getAllIncidencias();
     public Collection getAllMaquinas();
     public Collection getAllEstados();
-    public Collection getFiltradasFecha();
-    public Collection getFiltradasMaquinas();
-    public Collection getFiltradasEstados();
-    public Collection getFiltradasID();
+    public Collection getFiltradasFecha(String fecha,ObservableList<IncidenciaBean> filtro);
+    public Collection getFiltradasMaquinas(String maquina,ObservableList<IncidenciaBean> filtro);
+    public Collection getFiltradasEstados(String estado,ObservableList<IncidenciaBean> filtro);
+    public Collection getFiltradasID(Integer id,ObservableList<IncidenciaBean> filtro);
 }
