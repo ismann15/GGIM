@@ -105,6 +105,7 @@ public class GI01Controller implements Initializable{
         //exceptuando el “botón filtrar”, el cual se habilita
         txtID.textProperty().addListener(this::textChangeListener);
         txtDate.getEditor().textProperty().addListener(this::dateChangeListener);
+        
         comboEstados.valueProperty().addListener(this::comboEstadosChangeListener);
         comboMaquinas.valueProperty().addListener(this::comboMaquinasChangeListener);
         //txtDate.setOnAction(this::dateChangeListener);
@@ -146,8 +147,8 @@ public class GI01Controller implements Initializable{
     private void AniadirEstados() {
         //El “comboBox Estado” se carga con todos los posibles estados 
         //de una incidencia (Resuelta, En proceso, Sin procesar)
-        ObservableList <String> maquinas= FXCollections.observableArrayList(man.getAllEstados());
-        comboEstados.setItems(maquinas);
+        ObservableList <String> estados= FXCollections.observableArrayList(man.getAllEstados());
+        comboEstados.setItems(estados);
     }
     
     public void dateChangeListener( ObservableValue observable, String oldValue, String newValue){
@@ -202,11 +203,18 @@ public class GI01Controller implements Initializable{
             btnLimpiar.setDisable(false);
         }else{
             String date=txtDate.getEditor().getText().trim();
+            //System.out.println("date= "+date);
             String estado= comboEstados.getSelectionModel().getSelectedItem();
-            if(date.equals("")&&estado.equals("Sin selección")){
-                txtID.setDisable(false);
-                btnFiltrar.setDisable(true);
+            try{
+                if(date.equals("")&&estado!=null&&estado.equals("Sin selección")){
+                    txtID.setDisable(false);
+                    btnFiltrar.setDisable(true);
+                }
+            }catch(Exception e){
+                System.out.println("Ha ocurrido un error\n ");
+                e.printStackTrace();
             }
+            
         }
     }
     
